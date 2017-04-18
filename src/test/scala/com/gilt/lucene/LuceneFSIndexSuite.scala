@@ -1,15 +1,15 @@
 package com.gilt.lucene
 
+import java.nio.file.{Files, Path}
+
 import org.scalatest.FlatSpec
-import com.google.common.io.Files
-import java.io.File
 
 class LuceneFSIndexSuite extends FlatSpec with LuceneIndexBehaviors {
 
   def fsIndex = {
-    val directoryFile = Files.createTempDir()
+    val directoryPath = Files.createTempDirectory("tmp")
     new ReadableLuceneIndex with WritableLuceneIndex with LuceneStandardAnalyzer with FSLuceneDirectory with SimpleFSLuceneDirectoryCreator with LuceneIndexPathProvider {
-      protected def withIndexPath[T](f: (File) => T): T = f(directoryFile)
+      protected def withIndexPath[T](f: (Path) => T): T = f(directoryPath)
     }
   }
 

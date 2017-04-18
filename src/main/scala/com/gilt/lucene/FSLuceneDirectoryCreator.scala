@@ -1,18 +1,21 @@
 package com.gilt.lucene
 
 import java.io.File
-import org.apache.lucene.store.{MMapDirectory, SimpleFSDirectory, Directory}
+import java.nio.file.Path
 import javax.annotation.Nonnull
+
 import com.google.common.base.Preconditions
+import org.apache.lucene.store.{Directory, MMapDirectory, SimpleFSDirectory}
+
 
 /**
  * Base trait that creates a Lucene filesystem Directory from a root path
  */
 trait FSLuceneDirectoryCreator {
-  protected def directoryConstructor: File => Directory
+  protected def directoryConstructor: Path => Directory
 
   @Nonnull
-  def luceneDirectoryFromPath(@Nonnull path: File): Directory = {
+  def luceneDirectoryFromPath(@Nonnull path: Path): Directory = {
     Preconditions.checkNotNull(path)
     directoryConstructor(path)
   }

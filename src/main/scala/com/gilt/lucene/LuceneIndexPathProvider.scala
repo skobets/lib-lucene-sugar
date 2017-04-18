@@ -1,6 +1,6 @@
 package com.gilt.lucene
 
-import java.io.File
+import java.nio.file.{Files, Path, Paths}
 import javax.annotation.Nonnull
 
 /**
@@ -10,7 +10,7 @@ trait LuceneIndexPathProvider {
   /**
    * Provides the index directory path to the function f
    */
-  protected def withIndexPath[T](f: (File) => T): T
+  protected def withIndexPath[T](f: (Path) => T): T
 }
 
 /**
@@ -21,13 +21,12 @@ trait LuceneIndexPathProvider {
 trait ServiceRootLucenePathProvider extends LuceneIndexPathProvider {
   private lazy val INDEX_DIRECTORY = "index"
   private lazy val serviceRootPath = System.getProperty("user.dir")
-  private lazy val indexPath = new File(serviceRootPath, INDEX_DIRECTORY).getAbsolutePath
+  private lazy val indexPath = Paths.get(serviceRootPath, INDEX_DIRECTORY)
 
   @Nonnull
-  protected def withIndexPath[T](@Nonnull f: (File) => T): T = {
-    val indexFilePath = new File(indexPath)
-    indexFilePath.mkdirs() // make sure path exist
-    f(indexFilePath)
+  protected def withIndexPath[T](@Nonnull f: (Path) => T): T = {
+    Files.createDirectories(indexPath)
+    f(indexPath)
   }
 
 }

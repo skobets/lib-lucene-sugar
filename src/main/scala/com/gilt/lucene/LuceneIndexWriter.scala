@@ -14,7 +14,8 @@ trait LuceneIndexWriter { self: LuceneDirectory with LuceneAnalyzerProvider with
    */
   @Nonnull
   def withIndexWriter[T](@Nonnull f: IndexWriter => T): T = {
-    val iwriter = new IndexWriter(directory, new IndexWriterConfig(luceneVersion, luceneAnalyzer))
+    val conf = new IndexWriterConfig(luceneAnalyzer)
+    val iwriter = new IndexWriter(directory, conf)
     try {
       f(iwriter)
     } finally {

@@ -85,7 +85,7 @@ object LuceneFieldHelpers {
      */
     implicit object LuceneFieldLikeInt extends LuceneFieldLike[Int] {
       def addIndexedField(doc: Document, name: String, value: Int, stored: Store) {
-        doc.add(new IntField(name, value, stored))
+        doc.add(new IntPoint(name, value))
       }
 
       def addStoredOnlyField(doc: Document, name: String, value: Int) {
@@ -98,7 +98,7 @@ object LuceneFieldHelpers {
      */
     implicit object LuceneFieldLikeLong extends LuceneFieldLike[Long] {
       def addIndexedField(doc: Document, name: String, value: Long, stored: Store) {
-        doc.add(new LongField(name, value, stored))
+        doc.add(new LongPoint(name, value))
       }
 
       def addStoredOnlyField(doc: Document, name: String, value: Long) {
@@ -111,7 +111,7 @@ object LuceneFieldHelpers {
      */
     implicit object LuceneFieldLikeFloat extends LuceneFieldLike[Float] {
       def addIndexedField(doc: Document, name: String, value: Float, stored: Store) {
-        doc.add(new FloatField(name, value, stored))
+        doc.add(new FloatPoint(name, value))
       }
 
       def addStoredOnlyField(doc: Document, name: String, value: Float) {
@@ -124,7 +124,7 @@ object LuceneFieldHelpers {
      */
     implicit object LuceneFieldLikeDouble extends LuceneFieldLike[Double] {
       def addIndexedField(doc: Document, name: String, value: Double, stored: Store) {
-        doc.add(new DoubleField(name, value, stored))
+        doc.add(new DoublePoint(name, value))
       }
 
       def addStoredOnlyField(doc: Document, name: String, value: Double) {
